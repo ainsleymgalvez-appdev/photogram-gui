@@ -25,4 +25,34 @@ class UsersController < ApplicationController
 
     # end
   end
+
+  def insert_user
+
+    user_input = params.fetch("input_username")
+
+    u = User.new
+    u.username = user_input 
+    u.save
+    
+    @the_user = User.where(:username => u)
+
+    redirect_to("/users/"+ user_input)
+
+  end
+
+  def edit_user
+
+    edit_username = params.fetch("user_id")
+
+    new_username = params.fetch("input_username")
+
+    user = User.where({:id => edit_username}).at(0)
+    user.username = new_username
+    
+    user.save
+
+    redirect_to("/users/"+ new_username)
+
+
+  end
 end
